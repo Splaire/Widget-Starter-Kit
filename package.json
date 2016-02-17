@@ -1,0 +1,22 @@
+{
+  "name": "widget-starter-kit",
+  "version": "1.0.0",
+  "description": "Gulp toolkit to develop Splaire HTML5 Widgets",
+  "main": "gulpfile.js",
+  "author": "Yoeran Luteijn",
+  "license": "MIT",
+  "devDependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-connect": "^2.3.1",
+    "gulp-inline-source": "^2.1.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-open": "^1.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^2.2.0",
+    "jshint-stylish": "^2.1.0",
+    "run-sequence": "^1.1.5"
+  }
+}

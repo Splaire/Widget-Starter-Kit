@@ -1,0 +1,21 @@
+<!-- Version: <%= @options[:version] %> -->
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link inline href="../tmp/style.css" />
+  <style>
+    /* Inline styles can also make use of the Ruby object @options */
+    body {
+      color: <%= @options[:color] %>;
+    }
+  </style>
+</head>
+<body>
+  <h1>Example</h1>
+
+  <script type="text/javascript" src="viewport-helper.js" inline></script>
+  <script type="text/javascript" src="script.js" inline></script>
+</body>
+</html>
