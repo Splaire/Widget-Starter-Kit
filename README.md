@@ -59,9 +59,11 @@ Example JSON file:
 
 You can use these variables in your code like this:
 
-```scss
-// style.scss
-$color: unquote('<%= @options[:color] %>');
+```css
+/* index.html in <style> */
+p {
+  color: <%= @options[:color] %>;
+}
 ```
 
 ```js
