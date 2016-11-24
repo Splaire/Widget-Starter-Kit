@@ -86,4 +86,11 @@ A little guide to get you up and running.
 To start working on a widget `cd` into the widget directory and issue the command: `gulp --cwd .`  
 After that, Gulp will take care of all your file handling and serving your site over HTTP. Open the following URL in your browser: [http://localhost:4567](http://localhost:4567)
 
+Use the url [http://localhost:4567/preview](http://localhost:4567/preview) to open the widget in our "screen emulator". The previewer shows your widget three times in the triple-zone layout. This preview function will be improved in the future for better debugging.
+
 If you just want to build the latest version of a widget, then run: `gulp build --cwd .`
+
+## Todos ##
+* Add control to rotate screen in previewer
+* Add control to select another layout in previewer
+* Add control to change size

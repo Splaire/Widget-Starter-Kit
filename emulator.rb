@@ -18,3 +18,7 @@ get '/' do
 
   ERB.new( File.read('dist/index.html') ).result(binding)
 end
+
+get '/preview' do
+  erb :preview
+end
