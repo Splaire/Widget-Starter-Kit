@@ -1,19 +1,16 @@
-var gulp          = require('gulp');
-var del           = require('del');
-var plumber       = require('gulp-plumber');
-var jshint        = require('gulp-jshint');
-var stylish       = require('jshint-stylish');
-var livereload    = require('gulp-livereload');
-var autoprefixer  = require('gulp-autoprefixer');
-var sass          = require('gulp-sass');
-var runSequence   = require('run-sequence');
-var connect       = require('gulp-connect');
-var open          = require('gulp-open');
-
-var inlinesource  = require('gulp-inline-source');
-
-var exec = require('child_process').exec,
-    child;
+const gulp          = require('gulp');
+const del           = require('del');
+const plumber       = require('gulp-plumber');
+const jshint        = require('gulp-jshint');
+const stylish       = require('jshint-stylish');
+const livereload    = require('gulp-livereload');
+const autoprefixer  = require('gulp-autoprefixer');
+const sass          = require('gulp-sass');
+const runSequence   = require('run-sequence');
+const connect       = require('gulp-connect');
+const open          = require('gulp-open');
+const inlinesource  = require('gulp-inline-source');
+const exec          = require('child_process').exec;
 
 gulp.task('default', function(cb){
   runSequence('build', ['connect', 'watch'], 'open', cb);
@@ -35,9 +32,7 @@ gulp.task('inlinesource', function () {
 });
 
 gulp.task('connect', function () {
-  child = exec('ruby ./emulator.rb', function(err, stdout, stderr) {
-    console.log(err, stdout, stderr);
-  });
+  exec('ruby ./emulator.rb', (err, stdout, stderr) => console.log(err, stdout, stderr) );
 });
 
 gulp.task('styles', function () {
@@ -52,7 +47,7 @@ gulp.task('styles', function () {
 });
 
 gulp.task('clean', function (cb) {
-  del('./tmp', cb);
+  return del('./tmp', cb);
 });
 
 gulp.task('lint', function() {
