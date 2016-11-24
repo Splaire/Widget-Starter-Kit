@@ -26,7 +26,7 @@
 
   window.setZoneScale = function () {
     var scale = ( bodyElem.clientWidth + bodyElem.clientHeight ) / (1920+1080);
-    document.body.style.fontSize = scale + 'em';
+    window.document.body.style.fontSize = scale + 'em';
   };
 
 

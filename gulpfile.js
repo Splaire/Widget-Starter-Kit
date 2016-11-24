@@ -1,49 +1,68 @@
+// Utils
 const gulp          = require('gulp');
-const del           = require('del');
-const plumber       = require('gulp-plumber');
-const jshint        = require('gulp-jshint');
-const stylish       = require('jshint-stylish');
-const livereload    = require('gulp-livereload');
-const autoprefixer  = require('gulp-autoprefixer');
-const sass          = require('gulp-sass');
 const runSequence   = require('run-sequence');
 const connect       = require('gulp-connect');
 const open          = require('gulp-open');
-const inlinesource  = require('gulp-inline-source');
 const exec          = require('child_process').exec;
+const del           = require('del');
+const plumber       = require('gulp-plumber');
+const livereload    = require('gulp-livereload');
 
-gulp.task('default', function(cb){
+// HTML
+const usemin        = require('gulp-usemin');
+const minifyHtml    = require('gulp-minify-html');
+
+// JS
+const uglify        = require('gulp-uglify');
+const jshint        = require('gulp-jshint');
+const stylish       = require('jshint-stylish');
+
+// CSS
+const minifyCss     = require('gulp-minify-css');
+const autoprefixer  = require('gulp-autoprefixer');
+const sass          = require('gulp-sass');
+
+var DEBUG = false;
+
+const autoprefixerOpts = {
+  browsers: ['Android >= 29', 'ChromeAndroid >= 29', 'Chrome >= 29', 'last 5 versions']
+};
+
+const sassOpts = {
+  outputStyle: 'compressed'
+};
+
+gulp.task('default', ['build']);
+
+gulp.task('develop', function(cb){
+  DEBUG = true;
   runSequence('build', ['connect', 'watch'], 'open', cb);
 });
 
 gulp.task('build', function(cb){
-  runSequence('clean', ['lint', 'styles'], 'inlinesource', 'reload', cb);
+  runSequence('clean', ['lint', 'usemin'], 'reload', cb);
 });
 
 gulp.task('open', function(){
   return gulp.src(__filename).pipe( open({uri: 'http://localhost:4567'}) );
 });
 
-gulp.task('inlinesource', function () {
-  return gulp.src('./src/index.html')
-    .pipe( plumber() )
-    .pipe( inlinesource() )
-    .pipe(gulp.dest('./dist'));
+gulp.task('usemin', function(){
+  var jsTasks = DEBUG ? [] : [ uglify() ];
+  var htmlTasks = DEBUG ? [] : [ minifyHtml() ];
+
+  return gulp.src( './src/index.html')
+    .pipe(usemin({
+      enableHtmlComment: true,
+      inlinecss: [ sass(sassOpts), autoprefixer(autoprefixerOpts), minifyCss() ],
+      html: htmlTasks,
+      inlinejs: jsTasks
+    }))
+    .pipe( gulp.dest('./dist') );
 });
 
 gulp.task('connect', function () {
   exec('ruby ./emulator.rb', (err, stdout, stderr) => console.log(err, stdout, stderr) );
-});
-
-gulp.task('styles', function () {
-  return gulp.src( './src/style.scss' )
-    .pipe( plumber() )
-    .pipe( sass() )
-    .pipe( autoprefixer({
-      browsers: ['Android >= 29','ChromeAndroid >= 29','Chrome >= 29'],
-      cascade: false
-    }))
-    .pipe( gulp.dest( './tmp' ) );
 });
 
 gulp.task('clean', function (cb) {
@@ -63,6 +82,5 @@ gulp.task('reload', function(){
 
 gulp.task('watch', function(){
   livereload.listen();
-  gulp.watch( ['./{src,tmp}/*.{html,js,css}'], ['build'] );
-  gulp.watch( './src/style.scss', ['styles'] );
+  gulp.watch( ['./src/*.{html,js,css}'], ['build'] );
 });

@@ -57,18 +57,16 @@ Example JSON file:
 }
 ```
 
-You can use these variables in your code like this:
+You can retrieve these parameters in your code like this:
 
-```css
-/* index.html in <style> */
-p {
-  color: <%= @options[:color] %>;
-}
+```scss
+// style.scss
+$color: unquote('<%= getParam("color") %>');
 ```
 
 ```js
 // script.js
-var version = '<%= @options[:version] %>';
+var version = '<%= getParam("version") %>';
 ```
 
 ## Development ##
@@ -79,16 +77,16 @@ A little guide to get you up and running.
 - Install [Node](http://nodejs.org/) (Pro-tip: Use [NVM](https://github.com/creationix/nvm))
 - Install two gems: sinatra and json. With `gem install sinatra json`
 - Run `npm install` in the root directory. This will install the required node modules.
-- Install the [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei) browser plugin to enable automatically reloading the browser after changes.
-- Don't forget to run `npm install` after you pull in some new commits. Modules might have changed.
+- (optionally) Install the [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei) browser plugin to enable automatically reloading the browser after changes.
+- Don't forget to run `npm install` after you pull in new commits! Modules might have changed.
 
 ### Usage ###
-To start working on a widget `cd` into the widget directory and issue the command: `gulp --cwd .`  
+To start working on a widget just issue the command: `gulp develop`  
 After that, Gulp will take care of all your file handling and serving your site over HTTP. Open the following URL in your browser: [http://localhost:4567](http://localhost:4567)
 
 Use the url [http://localhost:4567/preview](http://localhost:4567/preview) to open the widget in our "screen emulator". The previewer shows your widget three times in the triple-zone layout. This preview function will be improved in the future for better debugging.
 
-If you just want to build the latest version of a widget, then run: `gulp build --cwd .`
+If you just want to build the latest version of the widget, then run: `gulp`
 
 ## Todos ##
 * Add control to rotate screen in previewer

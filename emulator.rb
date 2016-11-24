@@ -9,11 +9,22 @@ end
 
 get '/' do
   _file      = File.read('./src/params.json') rescue nil
-  _options   = _file.nil? ? [] : JSON.parse(_file)
+  @options   = _file.nil? ? [] : JSON.parse(_file)
 
-  @options = {}
-  _options.each do |k,v|
-    @options[k.to_sym] = v
+  def getParam(*keys)
+    startParams = @options
+    keys.each do |key|
+      val = startParams[key]
+      if val
+        unless val.is_a?(Hash) || val.is_a?(Array)
+          return val
+        end
+
+        startParams = val
+      else
+        return nil
+      end
+    end
   end
 
   ERB.new( File.read('dist/index.html') ).result(binding)

@@ -2,20 +2,19 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Example</title>
+  <title>Example Widget</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link inline href="../tmp/style.css" />
-  <style>
-    /* Inline styles can also make use of the Ruby object @options */
-    body {
-      color: <%= @options[:color] %>;
-    }
-  </style>
+
+  <!-- build:inlinecss -->
+  <link inline href="./style.scss" />
+  <!-- endbuild -->
 </head>
 <body>
-  <h1>Example</h1>
+  <h1>Let's get started!</h1>
 
+  <!-- build:inlinejs -->
   <script type="text/javascript" src="viewport-helper.js" inline></script>
   <script type="text/javascript" src="script.js" inline></script>
+  <!-- endbuild -->
 </body>
 </html>
