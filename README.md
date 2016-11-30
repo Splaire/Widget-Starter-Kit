@@ -1,6 +1,7 @@
-# Splaire Widget workflow #
+# Splaire widget starter kit #
+This repository helps you to get up and running to develop a widget for the Splaire.it Narrowcasting platform.
 
-A widget requires to following files:
+Developing a widget requires to following files:
 
 * index.html
 * script.js
@@ -9,7 +10,14 @@ A widget requires to following files:
 
 The workflow is provided by [Gulp](http://gulpjs.com/) and served over HTTP thanks to [Sinatra](http://www.sinatrarb.com/).
 
+## Distribution ##
+Are you done developing your awesome widget? Send us an email at [support@splaire.com](mailto:support@splaire.com) and we'll review and publish the widget. Please mention if you want the widget to be added to a specific account or the public library.
+
+The final widget should consist of one HTML file with all assets inlined. External requests for assets that should be static are not allowed.
+
 ## Widget requirements ##
+
+### Design ###
 A widget should be fully responsive to height and width and width of the zone it is placed in.
 
 Because the players can be used on both 1080p and 720p screens, mediaqueries are a bit complex. The `viewport-helper.js` file helps to build for the correct zone-type.
@@ -20,7 +28,7 @@ There are four distinct zone types. The zone types are based on their width/heig
 Zone      Helper ID     Ratio     WxH @ 720p    WxH @1080p
 Full      full          1.00      1280x672      1920x1080
 Content   full          1.00      1037x583      1556x875
-Side      side          0.23       243x583     	  364x875
+Side      side          0.23       243x583     	 364x875
 Bottom    bottom        5.26      1280x137      1920x205
 ```
 
@@ -43,9 +51,32 @@ A visual example of the various zones:
 ### Browser features ###
 The widget will be run in an Android WebView. This resembles Google Chrome v30. Gulp will autoprefix your SCSS for this version. You will have to take care of the correct polyfills for your Javascript yourself (if applicable).
 
+**Widgets do not support inline video elements. Some none-native players are unable to render these correctly.**
+
 A list of supported features is available upon request. Please send an email to [support@splaire.com](mailto:support@splaire.com).
 
-### Params.json ###
+## Widget API ##
+The widget will be rendered as an [ERB](https://en.wikipedia.org/wiki/ERuby) file and is exposed to the Widget API.
+At the moment the API only offers one method: `getParam(paramName: string)`. This method will return a value that the user submitted when adding the widget to a playlist.
+
+Some examples on how to use the API:
+```scss
+// style.scss
+$color: unquote('<%= getParam("color") %>');
+```
+
+```js
+// script.js
+var version = '<%= getParam("version") %>';
+```
+
+```erb
+<!-- index.html -->
+<span><%= getParam("version") %></span>
+```
+
+
+### Fixture ###
 The `params.json` file is a dummy file that emulates variables passed on by the Splaire server. In the production environment these variables are configurable. This enables a little customization for each widget.
 
 Example JSON file:
@@ -57,19 +88,7 @@ Example JSON file:
 }
 ```
 
-You can retrieve these parameters in your code like this:
-
-```scss
-// style.scss
-$color: unquote('<%= getParam("color") %>');
-```
-
-```js
-// script.js
-var version = '<%= getParam("version") %>';
-```
-
-## Development ##
+## Workflow ##
 A little guide to get you up and running.
 
 ### Setup ###
